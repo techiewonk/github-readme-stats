@@ -12,12 +12,12 @@ import {
 } from "../common/utils.js";
 import { statCardLocales } from "../translations.js";
 
-const CARD_MIN_WIDTH = 287;
-const CARD_DEFAULT_WIDTH = 287;
+const CARD_MIN_WIDTH = 280;
+const CARD_DEFAULT_WIDTH = 280;
 const RANK_CARD_MIN_WIDTH = 420;
 const RANK_CARD_DEFAULT_WIDTH = 450;
-const RANK_ONLY_CARD_MIN_WIDTH = 290;
-const RANK_ONLY_CARD_DEFAULT_WIDTH = 290;
+const RANK_ONLY_CARD_MIN_WIDTH = 280;
+const RANK_ONLY_CARD_DEFAULT_WIDTH = 280;
 
 /**
  * Create a stats card text item.
@@ -33,6 +33,7 @@ const RANK_ONLY_CARD_DEFAULT_WIDTH = 290;
  * @param {number} createTextNodeParams.shiftValuePos Number of pixels the value has to be shifted to the right.
  * @param {boolean} createTextNodeParams.bold Whether to bold the label.
  * @param {string} createTextNodeParams.number_format The format of numbers on card.
+ * @param {string|null=} createTextNodeParams.continuous_animation The type of continuous animation to apply.
  * @returns {string} The stats card text item SVG object.
  */
 const createTextNode = ({
@@ -46,6 +47,7 @@ const createTextNode = ({
   shiftValuePos,
   bold,
   number_format,
+  continuous_animation,
 }) => {
   const kValue =
     number_format.toLowerCase() === "long" ? value : kFormatter(value);
@@ -54,7 +56,7 @@ const createTextNode = ({
   const labelOffset = showIcons ? `x="25"` : "";
   const iconSvg = showIcons
     ? `
-    <svg data-testid="icon" class="icon" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+    <svg data-testid="icon" class="icon ${continuous_animation ? `continuous-${continuous_animation}` : ""}" viewBox="0 0 16 16" version="1.1" width="16" height="16">
       ${icon}
     </svg>
   `
@@ -64,7 +66,7 @@ const createTextNode = ({
       ${iconSvg}
       <text class="stat ${
         bold ? " bold" : "not_bold"
-      }" ${labelOffset} y="12.5">${label}:</text>
+      } ${continuous_animation ? `continuous-${continuous_animation}` : ""}" ${labelOffset} y="12.5">${label}:</text>
       <text
         class="stat ${bold ? " bold" : "not_bold"}"
         x="${(showIcons ? 140 : 120) + shiftValuePos}"
@@ -152,6 +154,15 @@ const getStyles = ({
       font: 800 24px 'Segoe UI', Ubuntu, Sans-Serif; fill: ${textColor};
       animation: scaleInAnimation 0.3s ease-in-out forwards;
     }
+    .continuous-pulse {
+      animation: pulseAnimation 2s ease-in-out infinite;
+    }
+    .continuous-rotate {
+      animation: rotateAnimation 3s linear infinite;
+    }
+    .continuous-bounce {
+      animation: bounceAnimation 1.5s ease-in-out infinite;
+    }
     .rank-percentile-header {
       font-size: 14px;
     }
@@ -184,6 +195,22 @@ const getStyles = ({
       animation: rankAnimation 1s forwards ease-in-out;
     }
     ${process.env.NODE_ENV === "test" ? "" : getProgressAnimation({ progress })}
+    
+    @keyframes pulseAnimation {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    @keyframes rotateAnimation {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes bounceAnimation {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-3px); }
+      60% { transform: translateY(-1px); }
+    }
   `;
 };
 
@@ -238,6 +265,7 @@ const renderStatsCard = (stats, options = {}) => {
     disable_animations = false,
     rank_icon = "default",
     show = [],
+    continuous_animation = null,
   } = options;
 
   const lheight = parseInt(String(line_height), 10);
@@ -379,6 +407,7 @@ const renderStatsCard = (stats, options = {}) => {
         shiftValuePos: 79.01 + (isLongLocale ? 50 : 0),
         bold: text_bold,
         number_format,
+        continuous_animation,
       }),
     );
 
@@ -506,7 +535,7 @@ const renderStatsCard = (stats, options = {}) => {
           })">
         <circle class="rank-circle-rim" cx="-10" cy="8" r="40" />
         <circle class="rank-circle" cx="-10" cy="8" r="40" />
-        <g class="rank-text">
+        <g class="rank-text ${continuous_animation ? `continuous-${continuous_animation}` : ""}">
           ${rankIcon(rank_icon, rank?.level, rank?.percentile)}
         </g>
       </g>`;

@@ -198,6 +198,44 @@ describe("Test renderStatsCard", () => {
     );
   });
 
+  it("should render with continuous animations", () => {
+    document.body.innerHTML = renderStatsCard(stats, {
+      continuous_animation: "pulse",
+      show_icons: true,
+    });
+
+    // Check if continuous-pulse class is applied to icons
+    const icons = document.querySelectorAll(".icon.continuous-pulse");
+    expect(icons.length).toBeGreaterThan(0);
+
+    // Test rotate animation
+    document.body.innerHTML = renderStatsCard(stats, {
+      continuous_animation: "rotate",
+      show_icons: true,
+    });
+
+    const rotateIcons = document.querySelectorAll(".icon.continuous-rotate");
+    expect(rotateIcons.length).toBeGreaterThan(0);
+
+    // Test bounce animation
+    document.body.innerHTML = renderStatsCard(stats, {
+      continuous_animation: "bounce",
+      show_icons: true,
+    });
+
+    const bounceIcons = document.querySelectorAll(".icon.continuous-bounce");
+    expect(bounceIcons.length).toBeGreaterThan(0);
+
+    // Test that rank circle also gets animation class
+    document.body.innerHTML = renderStatsCard(stats, {
+      continuous_animation: "pulse",
+      show_icons: true,
+    });
+
+    const rankCircle = document.querySelector(".rank-text.continuous-pulse");
+    expect(rankCircle).toBeInTheDocument();
+  });
+
   it("should render custom colors properly", () => {
     const customColors = {
       title_color: "5a0",
@@ -370,7 +408,7 @@ describe("Test renderStatsCard", () => {
 
     expect(
       document.body.getElementsByTagName("svg")[0].getAttribute("width"),
-    ).toBe("287");
+    ).toBe("280");
   });
 
   it("should render translations", () => {

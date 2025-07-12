@@ -28,6 +28,7 @@ export type StatCardOptions = CommonOptions & {
   text_bold: boolean;
   rank_icon: RankIcon;
   show: string[];
+  continuous_animation?: "pulse" | "rotate" | "bounce" | null;
 };
 
 export type RepoCardOptions = CommonOptions & {

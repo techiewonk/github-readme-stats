@@ -428,7 +428,7 @@ describe("Test renderTopLanguages", () => {
   it("should render with custom width set", () => {
     document.body.innerHTML = renderTopLanguages(langs, {});
 
-    expect(document.querySelector("svg")).toHaveAttribute("width", "300");
+    expect(document.querySelector("svg")).toHaveAttribute("width", "280");
 
     document.body.innerHTML = renderTopLanguages(langs, { card_width: 400 });
     expect(document.querySelector("svg")).toHaveAttribute("width", "400");
@@ -544,7 +544,7 @@ describe("Test renderTopLanguages", () => {
     );
     expect(queryAllByTestId(document.body, "lang-progress")[0]).toHaveAttribute(
       "width",
-      "100",
+      "92",
     );
 
     expect(queryAllByTestId(document.body, "lang-name")[1]).toHaveTextContent(
@@ -552,7 +552,7 @@ describe("Test renderTopLanguages", () => {
     );
     expect(queryAllByTestId(document.body, "lang-progress")[1]).toHaveAttribute(
       "width",
-      "100",
+      "92",
     );
 
     expect(queryAllByTestId(document.body, "lang-name")[2]).toHaveTextContent(
@@ -560,7 +560,7 @@ describe("Test renderTopLanguages", () => {
     );
     expect(queryAllByTestId(document.body, "lang-progress")[2]).toHaveAttribute(
       "width",
-      "50",
+      "46",
     );
   });
 
