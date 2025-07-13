@@ -110,7 +110,7 @@ describe("Card", () => {
     document.body.innerHTML = card.render(``);
     expect(queryByTestId(document.body, "main-card-body")).toHaveAttribute(
       "transform",
-      "translate(0, 55)",
+      "translate(0, 35)",
     );
   });
 
@@ -121,7 +121,7 @@ describe("Card", () => {
     document.body.innerHTML = card.render(``);
     expect(queryByTestId(document.body, "main-card-body")).toHaveAttribute(
       "transform",
-      "translate(0, 25)",
+      "translate(0, 15)",
     );
   });
 

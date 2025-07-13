@@ -87,7 +87,7 @@ exports[`Test Render WakaTime Card should render correctly with compact layout 1
         
       <g
         data-testid="card-title"
-        transform="translate(25, 35)"
+        transform="translate(15, 15)"
       >
         <g transform="translate(0, 0)">
       <text
@@ -102,7 +102,7 @@ exports[`Test Render WakaTime Card should render correctly with compact layout 1
 
         <g
           data-testid="main-card-body"
-          transform="translate(0, 55)"
+          transform="translate(0, 35)"
         >
           
     <svg x="0" y="0" width="100%">
@@ -239,7 +239,7 @@ exports[`Test Render WakaTime Card should render correctly with compact layout w
         
       <g
         data-testid="card-title"
-        transform="translate(25, 35)"
+        transform="translate(15, 15)"
       >
         <g transform="translate(0, 0)">
       <text
@@ -254,7 +254,7 @@ exports[`Test Render WakaTime Card should render correctly with compact layout w
 
         <g
           data-testid="main-card-body"
-          transform="translate(0, 55)"
+          transform="translate(0, 35)"
         >
           
     <svg x="0" y="0" width="100%">
